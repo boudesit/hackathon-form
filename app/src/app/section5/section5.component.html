@@ -1,1 +1,25 @@
-<p>section5 works!</p>
+<div *ngIf="end">End section 5</div>
+<div *ngIf="!end">
+    <div *ngIf="!isInConfirmationMode">
+        <h2>Mot de passe :</h2>
+        <div class="error" *ngIf="tryAgain"> Les mots de passe de correspondent pas, merci de reessayer</div>        
+        <input matInput [type]="hide ? 'password' : 'text'" [value]="password" disabled>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <br>
+        <button mat-raised-button color="warn" (click)="reset()">Reinitialiser</button>
+        <button mat-raised-button color="basic" (click)="addChar()">Ajouter un caractere</button>
+        <br><br>
+        <button mat-raised-button color="primary" (click)="validate('')">Valider</button>
+    </div>
+    <div *ngIf="isInConfirmationMode">
+        <h2>Confirmez votre mot de passe :</h2>
+        <input matInput [type]="hide ? 'password' : 'text'" #passwordConfirmation>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <br><br>
+        <button mat-raised-button color="primary" (click)="validate(passwordConfirmation.value)">Valider</button>
+    </div>
+</div>

@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  current_section = 'section1';
+  current_section = 'section5';
 }
