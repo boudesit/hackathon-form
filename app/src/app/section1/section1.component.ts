@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-section1',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Section1Component implements OnInit {
 
-  constructor() { }
+  constructor(private appService: AppService) { }
 
   ngOnInit(): void {
   }
-
+  
+  endSection() {
+    this.appService.setCurrentSection('section2');
+  }
 }

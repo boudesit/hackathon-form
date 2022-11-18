@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-section5',
@@ -6,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./section5.component.css']
 })
 export class Section5Component implements OnInit {
-  private charList: string;
-  end: boolean;
 
   isInConfirmationMode: boolean;
   tryAgain: boolean;
@@ -15,9 +14,7 @@ export class Section5Component implements OnInit {
 
   hide: boolean;
 
-  constructor() { 
-    this.charList = 'abcdefghijklmnopqrstuvwxysABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-={}[];:,.<>/?|';
-    this.end = false;
+  constructor(private appService: AppService) { 
 
     this.isInConfirmationMode = false;
     this.tryAgain = false;
@@ -29,20 +26,12 @@ export class Section5Component implements OnInit {
   ngOnInit(): void {
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
-  getRandomChar() {
-    return this.charList.charAt(this.getRandomInt(this.charList.length));
-  }
-
   reset() {
     this.password = '';
   }
 
   addChar() {
-    this.password += this.getRandomChar();
+    this.password += this.appService.getRandomChar();
   }
 
   validate(passwordConfirmation: string) {
@@ -50,15 +39,18 @@ export class Section5Component implements OnInit {
     if(!this.isInConfirmationMode) {
       this.isInConfirmationMode = true;
     } else {
-      console.log(passwordConfirmation);
-      if(this.password === passwordConfirmation) {
-        this.end = true;
-      } else {
+      if(this.password !== passwordConfirmation) {
         this.reset();
         this.isInConfirmationMode = false;
         this.tryAgain = true;
+      } else {
+        this.endSection();
       }
     }
+  }
+
+  endSection() {
+    this.appService.setCurrentSection('section6');
   }
 
 }
